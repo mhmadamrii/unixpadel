@@ -72,3 +72,20 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+model Sales {
+    id        String   @id @default(cuid())
+    name      String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Customer {
+    id        String   @id @default(cuid())
+    name      String
+    email     String
+    company   String
+    isActive  Boolean
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
