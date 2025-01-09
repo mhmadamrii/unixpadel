@@ -1,4 +1,10 @@
+"use client";
+
+import Link from "next/link";
+
 import { Bell, Search, User } from "lucide-react";
+import { ModeToggle } from "./ui/theme-toggle";
+import { signOut } from "next-auth/react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { CustomTrigger } from "./CustomSidebarTrigger";
@@ -10,7 +16,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import Link from "next/link";
 
 export function Header() {
   return (
@@ -29,10 +34,7 @@ export function Header() {
             </Button>
           </div>
           <div className="flex items-center">
-            <Button variant="ghost" size="icon">
-              <Bell className="h-5 w-5" />
-              <span className="sr-only">Notifications</span>
-            </Button>
+            <ModeToggle />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon">
@@ -45,7 +47,9 @@ export function Header() {
                 <DropdownMenuItem asChild>
                   <Link href="/settings">Settings</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>Logout</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => signOut()}>
+                  Logout
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

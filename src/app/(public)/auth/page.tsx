@@ -1,5 +1,6 @@
 "use client";
 
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "~/components/ui/button";
 import {
@@ -14,7 +15,7 @@ import {
 export default function Auth() {
   const router = useRouter();
   const handleGoogleSignIn = () => {
-    router.push("/");
+    signIn("google");
   };
 
   return (

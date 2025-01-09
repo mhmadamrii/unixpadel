@@ -13,7 +13,7 @@ export default function Dashboard() {
         <div className="container mx-auto px-6 py-8">
           <h1 className="mb-6 text-3xl font-semibold">Dashboard</h1>
           <DashboardMetrics />
-          <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mb-6 mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             <div className="lg:col-span-2">
               <RecentActivities />
             </div>

@@ -1,15 +1,13 @@
 "use client";
 
 import * as z from "zod";
-import { useRouter } from "next/navigation";
+import { Input } from "~/components/ui/input";
+import { Spinner } from "~/components/LoadingIndicator";
+import { api } from "~/trpc/react";
 import { PlusCircle } from "lucide-react";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { api } from "~/trpc/react";
-import { Spinner } from "~/components/LoadingIndicator";
-import { Input } from "~/components/ui/input";
-import { Switch } from "~/components/ui/switch";
 import { Button } from "~/components/ui/button";
 
 import {
@@ -33,40 +31,36 @@ import {
 
 const formSchema = z.object({
   name: z.string(),
-  email: z.string(),
-  company_name: z.string(),
-  is_active: z.boolean(),
+  sales_email: z.string(),
+  target_sales: z.coerce.number().min(100).max(10000),
 });
 
-export function FormCustomer() {
+export function FormSales() {
   const utils = api.useUtils();
-  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      company_name: "",
-      email: "",
-      is_active: false,
       name: "",
+      sales_email: "",
+      target_sales: 0,
     },
   });
 
-  const { mutate, isPending } = api.customer.createCustomer.useMutation({
+  const { mutate, isPending } = api.sales.createSales.useMutation({
     onSuccess: () => {
-      toast.success("Successfully create customer");
+      toast.success("Successfully create sales");
       form.reset();
       utils.invalidate();
-      // router.refresh();
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     try {
+      console.log(values);
       mutate({
-        company: values.company_name,
-        email: values.email,
-        isActive: values.is_active,
         name: values.name,
+        email: values.sales_email,
+        target: values.target_sales,
       });
     } catch (error) {
       console.error("Form submission error", error);
@@ -78,17 +72,17 @@ export function FormCustomer() {
     <Dialog>
       <DialogTrigger asChild>
         <Button>
-          <PlusCircle className="mr-2 h-4 w-4" /> Add Customer
+          <PlusCircle className="mr-2 h-4 w-4" /> Add Sales
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Form Customer</DialogTitle>
+          <DialogTitle>Form Sales</DialogTitle>
           <DialogDescription asChild>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-2 py-5"
+                className="space-y-3 py-3"
               >
                 <FormField
                   control={form.control}
@@ -99,12 +93,12 @@ export function FormCustomer() {
                       <FormControl>
                         <Input
                           disabled={isPending}
-                          placeholder="Aleyna"
+                          placeholder="mehmet"
                           type="text"
                           {...field}
                         />
                       </FormControl>
-                      <FormDescription>Customer's name</FormDescription>
+                      <FormDescription>Sales name</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -112,19 +106,19 @@ export function FormCustomer() {
 
                 <FormField
                   control={form.control}
-                  name="email"
+                  name="sales_email"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
                         <Input
                           disabled={isPending}
-                          placeholder="aleyna@gmail.com"
+                          placeholder="mehmet@gmail.com"
                           type="email"
                           {...field}
                         />
                       </FormControl>
-                      <FormDescription>Customer's email</FormDescription>
+                      <FormDescription>Sales email</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -132,42 +126,20 @@ export function FormCustomer() {
 
                 <FormField
                   control={form.control}
-                  name="company_name"
+                  name="target_sales"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Company Name</FormLabel>
+                      <FormLabel>Target</FormLabel>
                       <FormControl>
                         <Input
                           disabled={isPending}
-                          placeholder="unixpadel"
-                          type=""
+                          placeholder="$45.000"
+                          type="number"
                           {...field}
                         />
                       </FormControl>
-                      <FormDescription>Customer's company name</FormDescription>
+                      <FormDescription>Target sales per month</FormDescription>
                       <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="is_active"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                      <div className="space-y-0.5">
-                        <FormLabel>Is Customer Active</FormLabel>
-                        <FormDescription>
-                          Enable switch if customer active
-                        </FormDescription>
-                      </div>
-                      <FormControl>
-                        <Switch
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                          disabled={isPending}
-                        />
-                      </FormControl>
                     </FormItem>
                   )}
                 />

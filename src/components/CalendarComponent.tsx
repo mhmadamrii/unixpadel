@@ -1,12 +1,15 @@
 "use client";
 
 import moment from "moment";
+
 import { useState } from "react";
+import { useTheme } from "next-themes";
 import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import { Card, CardContent } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
+
 import {
   Dialog,
   DialogContent,
@@ -27,6 +30,8 @@ interface Event {
 }
 
 export function CalendarComponent() {
+  const { themes, systemTheme, theme } = useTheme();
+  console.log(theme);
   const [events, setEvents] = useState<Event[]>([
     {
       id: 1,
@@ -131,15 +136,16 @@ export function CalendarComponent() {
             </DialogContent>
           </Dialog>
         </div>
-        <Calendar
-          localizer={localizer}
-          events={events}
-          startAccessor="start"
-          endAccessor="end"
-          style={{ height: 500 }}
-          onSelectSlot={handleSelectSlot}
-          selectable
-        />
+        <div className={theme === "dark" ? "dark" : ""}>
+          <Calendar
+            localizer={localizer}
+            events={events}
+            startAccessor="start"
+            endAccessor="end"
+            style={{ height: 500 }}
+            selectable
+          />
+        </div>
       </CardContent>
     </Card>
   );

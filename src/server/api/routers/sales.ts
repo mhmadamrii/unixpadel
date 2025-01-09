@@ -6,27 +6,25 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 
-export const customerRouter = createTRPCRouter({
+export const salesRouter = createTRPCRouter({
   getCustomers: publicProcedure.query(({ ctx }) => {
     return ctx.db.customer.findMany();
   }),
 
-  createCustomer: publicProcedure
+  createSales: publicProcedure
     .input(
       z.object({
         name: z.string().min(1),
         email: z.string().email(),
-        company: z.string().min(1),
-        isActive: z.boolean(),
+        target: z.number().min(100).max(10000),
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      return ctx.db.customer.create({
+      return ctx.db.sales.create({
         data: {
           name: input.name,
-          company: input.company,
           email: input.email,
-          isActive: input.isActive,
+          target: input.target,
         },
       });
     }),

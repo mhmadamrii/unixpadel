@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "~/components/ui/button";
+import { DeleteCustomer } from "./DeleteCustomer";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { api } from "~/trpc/react";
 import { Input } from "~/components/ui/input";
@@ -15,62 +16,16 @@ import {
   TableRow,
 } from "~/components/ui/table";
 
-const initialCustomers = [
-  {
-    id: 1,
-    name: "Alice Johnson",
-    email: "alice@example.com",
-    company: "Tech Corp",
-    isActive: true,
-  },
-  {
-    id: 2,
-    name: "Bob Smith",
-    email: "bob@example.com",
-    company: "Innovate Inc",
-    isActive: false,
-  },
-  {
-    id: 3,
-    name: "Charlie Brown",
-    email: "charlie@example.com",
-    company: "Design Co",
-    isActive: true,
-  },
-  {
-    id: 4,
-    name: "Diana Ross",
-    email: "diana@example.com",
-    company: "Music Ltd",
-    isActive: true,
-  },
-  {
-    id: 5,
-    name: "Edward Norton",
-    email: "edward@example.com",
-    company: "Film Studios",
-    isActive: false,
-  },
-];
-
 export function CustomerTable() {
   const { data: customersDb = [] } = api.customer.getCustomers.useQuery();
-  const [customers, setCustomers] = useState([
-    ...initialCustomers,
-    ...customersDb,
-  ]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredCustomers = customers.filter(
+  const filteredCustomers = customersDb.filter(
     (customer) =>
       customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       customer.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       customer.company.toLowerCase().includes(searchTerm.toLowerCase()),
   );
-
-  useEffect(() => {
-    setCustomers([...initialCustomers, ...customersDb]);
-  }, [customersDb]);
 
   return (
     <>
@@ -106,9 +61,7 @@ export function CustomerTable() {
                   <Button variant="outline" size="sm" className="mr-2">
                     Edit
                   </Button>
-                  <Button variant="outline" size="sm">
-                    Delete
-                  </Button>
+                  <DeleteCustomer id={customer.id} />
                 </TableCell>
               </TableRow>
             ))}

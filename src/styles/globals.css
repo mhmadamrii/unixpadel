@@ -122,3 +122,40 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Light Mode Styles */
+.rbc-calendar {
+  background-color: white;
+  color: black;
+}
+
+.rbc-header {
+  background-color: #f5f5f5;
+  color: black;
+}
+
+.rbc-event {
+  background-color: #3182ce; /* Blue */
+  color: white;
+}
+
+/* Dark Mode Styles */
+.dark .rbc-calendar {
+  background-color: #2d2d2d;
+  color: #e0e0e0;
+}
+
+.dark .rbc-header {
+  background-color: #3d3d3d;
+  color: #e0e0e0;
+}
+
+.dark .rbc-event {
+  background-color: #4a90e2; /* Softer Blue */
+  color: #fff;
+}
+
+.dark .rbc-today {
+  color: #fff;
+  background-color: #444; /* Darker Highlight */
+}
