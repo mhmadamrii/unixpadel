@@ -74,10 +74,12 @@ model VerificationToken {
 }
 
 model Sales {
-    id        String   @id @default(cuid())
-    name      String
-    email     String
-    target    Int
+    id     String @id @default(cuid())
+    name   String
+    email  String
+    target Int
+
+    events    Event[]
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
@@ -88,6 +90,20 @@ model Customer {
     email     String
     company   String
     isActive  Boolean
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Event {
+    id        Int      @id @default(autoincrement())
+    sales     String
+    customer  String
+    date      DateTime
+    type      String
+    note      String
+    amount    Int?
+    Sales     Sales?   @relation(fields: [salesId], references: [id])
+    salesId   String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }

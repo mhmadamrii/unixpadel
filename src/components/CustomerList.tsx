@@ -8,38 +8,20 @@ import {
   TableRow,
 } from "~/components/ui/table";
 
-export function CustomerList() {
-  const customers = [
-    {
-      id: 1,
-      name: "Alice Johnson",
-      company: "Tech Corp",
-      status: "Active",
-    },
-    {
-      id: 2,
-      name: "Bob Smith",
-      company: "Innovate Inc",
-      status: "Inactive",
-    },
-    {
-      id: 3,
-      name: "Charlie Brown",
-      company: "Design Co",
-      status: "Active",
-    },
-    {
-      id: 4,
-      name: "Diana Ross",
-      company: "Music Ltd",
-      status: "Active",
-    },
-  ];
-
+export function CustomerList({
+  customers,
+}: {
+  customers: Array<{
+    id: string;
+    name: string;
+    company: string;
+    isActive: boolean;
+  }>;
+}) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Customer List</CardTitle>
+        <CardTitle>Trending Customer List</CardTitle>
       </CardHeader>
       <CardContent>
         <Table>
@@ -51,11 +33,13 @@ export function CustomerList() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {customers.map((customer) => (
+            {customers.slice(0, 8).map((customer) => (
               <TableRow key={customer.id}>
                 <TableCell>{customer.name}</TableCell>
                 <TableCell>{customer.company}</TableCell>
-                <TableCell>{customer.status}</TableCell>
+                <TableCell>
+                  {customer.isActive ? "Active" : "Inactive"}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

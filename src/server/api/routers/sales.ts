@@ -7,8 +7,16 @@ import {
 } from "~/server/api/trpc";
 
 export const salesRouter = createTRPCRouter({
-  getCustomers: publicProcedure.query(({ ctx }) => {
-    return ctx.db.customer.findMany();
+  getCalendarEvents: publicProcedure.query(async ({ ctx }) => {
+    const [sales, customers] = await Promise.all([
+      ctx.db.sales.findMany(),
+      ctx.db.customer.findMany(),
+    ]);
+
+    return {
+      sales,
+      customers,
+    };
   }),
 
   createSales: publicProcedure

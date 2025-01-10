@@ -57,7 +57,21 @@ const activityData = [
   },
 ];
 
-export function RecentActivities() {
+export function RecentActivities({
+  events,
+}: {
+  events: {
+    id: number;
+    type: string;
+    date: Date;
+    sales: string;
+    customer: string;
+    createdAt: Date;
+    note: string;
+    amount: number | null;
+  }[];
+}) {
+  console.log(events);
   return (
     <Card className="col-span-4">
       <CardHeader>
