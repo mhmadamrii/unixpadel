@@ -29,7 +29,7 @@ export default function Auth() {
       <div className="absolute inset-0 bg-black/50"></div>
 
       {/* Card */}
-      <Card className="relative z-10 h-[70%] w-full bg-card sm:h-auto sm:w-[350px]">
+      <Card className="relative z-10 h-[30%] w-full bg-card sm:h-auto sm:w-[350px]">
         <CardHeader>
           <CardTitle>Welcome to CRM</CardTitle>
           <CardDescription>Sign in to access your dashboard</CardDescription>
