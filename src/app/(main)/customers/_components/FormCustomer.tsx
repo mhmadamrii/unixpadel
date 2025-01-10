@@ -88,7 +88,7 @@ export function FormCustomer() {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-2 py-5"
+                className="space-y-2 py-5 text-start"
               >
                 <FormField
                   control={form.control}

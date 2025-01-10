@@ -115,7 +115,7 @@ export function FormCalendar() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="mx-auto w-full space-y-3 py-3"
           >
-            <div className="grid grid-cols-12 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-12">
               <div className="col-span-6">
                 <FormField
                   control={form.control}
@@ -190,7 +190,7 @@ export function FormCalendar() {
               </div>
             </div>
 
-            <div className="grid grid-cols-12 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-12">
               <div className="col-span-6">
                 <FormField
                   control={form.control}
@@ -292,7 +292,7 @@ export function FormCalendar() {
               )}
             />
 
-            <div className="flex w-full justify-end gap-2">
+            <div className="flex w-full flex-col justify-end gap-2 sm:flex-row">
               <div>
                 <FormField
                   control={form.control}

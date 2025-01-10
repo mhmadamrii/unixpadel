@@ -139,7 +139,7 @@ export default function SignatureInput({
   };
 
   return (
-    <div className="relative h-[200px] w-[400px] overflow-hidden rounded-md border border-gray-300">
+    <div className="relative h-[200px] w-full overflow-hidden rounded-md border border-gray-300 sm:w-[400px]">
       <canvas
         ref={canvasRef}
         width={400}
