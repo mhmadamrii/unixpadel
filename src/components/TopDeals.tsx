@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import {
   Table,
@@ -7,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
+import { api } from "~/trpc/react";
 
 const topDeals = [
   {
@@ -47,6 +50,8 @@ const topDeals = [
 ];
 
 export function TopDeals() {
+  const { data } = api.sales.getTopDeals.useQuery();
+  console.log("data", data);
   return (
     <Card>
       <CardHeader>
@@ -63,12 +68,14 @@ export function TopDeals() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {topDeals.map((deal) => (
+            {data?.slice(0, 5).map((deal) => (
               <TableRow key={deal.id}>
                 <TableCell>{deal.customer}</TableCell>
-                <TableCell>${deal.value.toLocaleString()}</TableCell>
-                <TableCell>{deal.status}</TableCell>
-                <TableCell>{deal.sales_name}</TableCell>
+                <TableCell>${deal?.amount?.toLocaleString()}</TableCell>
+                <TableCell>
+                  {deal.amount == 0 ? "In Progress" : "Negotiation"}
+                </TableCell>
+                <TableCell>{deal.Sales?.name}</TableCell>
               </TableRow>
             ))}
           </TableBody>

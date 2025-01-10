@@ -26,6 +26,8 @@ const activities = [
   },
 ];
 
+const time = "2025-01-10T06:14:22.508Z";
+
 const activityData = [
   {
     name: "Mon",
@@ -71,6 +73,25 @@ export function RecentActivities({
     amount: number | null;
   }[];
 }) {
+  function getRelativeTime(inputTime: Date) {
+    const now: any = new Date();
+    const then: any = new Date(inputTime);
+    const diffInSeconds = Math.floor((now - then) / 1000);
+
+    const minutes = Math.floor(diffInSeconds / 60);
+    const hours = Math.floor(diffInSeconds / 3600);
+    const days = Math.floor(diffInSeconds / 86400);
+
+    if (diffInSeconds < 60) {
+      return `${diffInSeconds} seconds ago`;
+    } else if (minutes < 60) {
+      return `${minutes} minutes ago`;
+    } else if (hours < 24) {
+      return `${hours} hours ago`;
+    } else {
+      return `${days} days ago`;
+    }
+  }
   console.log(events);
   return (
     <Card className="col-span-4">
@@ -100,10 +121,12 @@ export function RecentActivities({
           </ResponsiveContainer>
         </div>
         <ul className="mt-4 space-y-4">
-          {activities.map((activity) => (
+          {events.slice(0, 4).map((activity) => (
             <li key={activity.id} className="flex items-center justify-between">
-              <span>{activity.description}</span>
-              <span className="text-sm text-gray-500">{activity.time}</span>
+              <span>{activity.note}</span>
+              <span className="text-sm text-gray-500">
+                {getRelativeTime(activity.createdAt)}
+              </span>
             </li>
           ))}
         </ul>

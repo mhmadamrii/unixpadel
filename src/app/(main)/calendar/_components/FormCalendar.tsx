@@ -2,6 +2,7 @@
 
 import SignatureInput from "~/components/ui/signature-input";
 
+import { useRouter } from "next/navigation";
 import { Spinner } from "~/components/LoadingIndicator";
 import { Input } from "~/components/ui/input";
 import { format } from "date-fns";
@@ -61,6 +62,7 @@ const formSchema = z.object({
 });
 
 export function FormCalendar() {
+  const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -79,12 +81,12 @@ export function FormCalendar() {
     onSuccess: () => {
       toast.success("Successfully create event");
       form.reset();
+      router.refresh();
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      console.log(values);
       mutate({
         sales_name: values.sales_name,
         customer_name: values.customer_name,
@@ -129,7 +131,7 @@ export function FormCalendar() {
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Aleyna" />
+                            <SelectValue placeholder="Select" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -164,13 +166,16 @@ export function FormCalendar() {
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Microsoft Corp" />
+                            <SelectValue placeholder="Select" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
                           {calendarEvents?.customers.map((customer) => (
-                            <SelectItem key={customer.id} value={customer.id}>
-                              {customer.company}
+                            <SelectItem
+                              key={customer.id}
+                              value={`${customer.company}`}
+                            >
+                              {customer.name} - {customer.company}
                             </SelectItem>
                           ))}
                         </SelectContent>

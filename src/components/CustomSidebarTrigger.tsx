@@ -5,7 +5,7 @@ import { useSidebar } from "~/components/ui/sidebar";
 import { Button } from "./ui/button";
 
 export function CustomTrigger() {
-  const { toggleSidebar } = useSidebar();
+  const { toggleSidebar, open } = useSidebar();
 
   return (
     <Button size="icon" onClick={toggleSidebar}>

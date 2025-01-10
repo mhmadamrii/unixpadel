@@ -5,7 +5,7 @@ import { DeleteCustomer } from "./DeleteCustomer";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { api } from "~/trpc/react";
 import { Input } from "~/components/ui/input";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   Table,
@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
+import { FormEditCustomer } from "./FormEditCustomer";
 
 export function CustomerTable() {
   const { data: customersDb = [] } = api.customer.getCustomers.useQuery();
@@ -37,7 +38,7 @@ export function CustomerTable() {
           className="max-w-sm"
         />
       </div>
-      <ScrollArea className="h-[70vh] w-full rounded-md border p-4">
+      <ScrollArea className="h-[63vh] w-full rounded-md border p-4">
         <Table className="rounded-lg">
           <TableHeader>
             <TableRow>
@@ -57,10 +58,14 @@ export function CustomerTable() {
                 <TableCell>
                   {customer.isActive ? "Active" : "Inactive"}
                 </TableCell>
-                <TableCell>
-                  <Button variant="outline" size="sm" className="mr-2">
-                    Edit
-                  </Button>
+                <TableCell className="flex items-center gap-2">
+                  <FormEditCustomer
+                    name={customer.name}
+                    email={customer.email}
+                    isActive={customer.isActive}
+                    company_name={customer.company}
+                    id={customer.id}
+                  />
                   <DeleteCustomer id={customer.id} />
                 </TableCell>
               </TableRow>

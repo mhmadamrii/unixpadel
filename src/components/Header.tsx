@@ -19,21 +19,16 @@ import {
 
 export function Header() {
   return (
-    <header className="bg-card shadow-sm">
+    <header className="sticky top-0 z-50 bg-card shadow-sm">
       <div className="w-full px-4 py-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <CustomTrigger />
             <div>
-              <h1 className="text-xl font-bold">Unixpadel</h1>
+              <h1 className="text-xl font-bold">Unixpadel CRM</h1>
             </div>
-            <Input type="search" placeholder="Search..." className="w-64" />
-            <Button size="icon" className="ml-2">
-              <Search className="h-5 w-5" />
-              <span className="sr-only">Search</span>
-            </Button>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
             <ModeToggle />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

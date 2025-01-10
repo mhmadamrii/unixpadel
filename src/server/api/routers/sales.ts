@@ -37,6 +37,14 @@ export const salesRouter = createTRPCRouter({
       });
     }),
 
+  getTopDeals: publicProcedure.query(async ({ ctx }) => {
+    return ctx.db.event.findMany({
+      include: {
+        Sales: true,
+      },
+    });
+  }),
+
   deleteCustomer: publicProcedure
     .input(
       z.object({
